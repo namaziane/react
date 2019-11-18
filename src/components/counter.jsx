@@ -4,7 +4,13 @@ class Counter extends Component {
     state = {  
         count : 0,
         imageUrl:'https://picsum.photos/50',
-        tags : ['tag1','tag2','tag3']
+        tags : [{
+            name :  "tag0",
+            count :0
+        },{
+            name :  "tag1",
+            count :0
+        }]
     }
     constructor(){
         super();
@@ -31,14 +37,29 @@ class Counter extends Component {
                 <img src={this.state.imageUrl}></img>
                 <span className={this.getBadgeClasses()}> {this.formatCount()}</span> 
                 {this.renderTags()}
-                <button className="btn btn-secondary btn-sm" onClick={this.doHandleIncrement}>Increment</button>
+                <button className="btn btn-secondary btn-sm" onClick={() => this.handleIncrement ({id : 1})}>Increment</button>
             </div>        
             );
+    }
+    onTagClick =  (tag) => {
+            let ta = [];
+            this.state.tags.forEach(a => {
+                if(a.name === tag.name){
+                    ta.push({
+                        name :  tag.name,
+                        count : a.count +1
+                    });
+                }else{
+                    ta.push(a);
+                }
+            });
+            this.setState({tags : ta})
+
     }
     renderTags() {
         if (this.state.tags.length === 0) return 'There are no Tags!' 
         return <ul>
-                {this.state.tags.map(tag => <li key={tag}>tag</li>)}
+                {this.state.tags.map(tag => <li key={tag.name} onClick = {() => this.onTagClick(tag)} >{tag.name} {tag.count}</li>)}
                 </ul>;
     }
 
