@@ -15,12 +15,15 @@ class Counter extends Component {
         this.setState(this.state);*/
         console.log("this = ", this);
     }
-    onIncrementHandler = () => {
-        const newState= {imageUrl:'https://picsum.photos/100',
-                        count:this.state.count + 1,
-                        other:122};
-        this.setState(newState);
-        console.log("this = ", this);
+    handleIncrement = (product) => {
+        console.log(product);
+        this.setState({
+                imageUrl:'https://picsum.photos/100',
+                count: this.state.count + 1
+        });
+    }
+    doHandleIncrement = () => {
+        this.handleIncrement ({id : 1});
     }
     render() { 
         return ( 
@@ -28,7 +31,7 @@ class Counter extends Component {
                 <img src={this.state.imageUrl}></img>
                 <span className={this.getBadgeClasses()}> {this.formatCount()}</span> 
                 {this.renderTags()}
-                <button className="btn btn-secondary btn-sm" onClick={this.onIncrementHandler}>Increment</button>
+                <button className="btn btn-secondary btn-sm" onClick={this.doHandleIncrement}>Increment</button>
             </div>        
             );
     }
